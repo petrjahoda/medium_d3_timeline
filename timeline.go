@@ -8,11 +8,11 @@ import (
 	"time"
 )
 
-type CalendarInput struct {
+type TimelineInput struct {
 	Date int64
 }
 
-type CalendarOutput struct {
+type TimelineOutput struct {
 	Result         string
 	ProductionData []TimelineData
 	DowntimeData   []TimelineData
@@ -26,11 +26,11 @@ type TimelineData struct {
 
 func getTimeLineData(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
 	logInfo("MAIN", "Timeline function called")
-	var data CalendarInput
+	var data TimelineInput
 	err := json.NewDecoder(request.Body).Decode(&data)
 	if err != nil {
 		logError("MAIN", "Error parsing data: "+err.Error())
-		var responseData CalendarOutput
+		var responseData TimelineOutput
 		responseData.Result = "nok: " + err.Error()
 		writer.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(writer).Encode(responseData)
@@ -74,7 +74,7 @@ func getTimeLineData(writer http.ResponseWriter, request *http.Request, params h
 	productionData = append(productionData, TimelineData{Date: endTime.Unix(), Value: 0})
 	downtimeData = append(downtimeData, TimelineData{Date: endTime.Unix(), Value: 0})
 	powerOffData = append(powerOffData, TimelineData{Date: endTime.Unix(), Value: 0})
-	var responseData CalendarOutput
+	var responseData TimelineOutput
 	responseData.Result = "ok"
 	responseData.ProductionData = productionData
 	responseData.DowntimeData = downtimeData
