@@ -1,1 +1,3 @@
-# medium_d3_timeline
+D3 v6 timeline example, described here: https://petrjahoda.medium.com/how-to-create-d3js-v6-timeline-1a32e586fe56
+
+![actual screenshot](result.png)
